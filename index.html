@@ -8,34 +8,26 @@
   </head>
   <body>
     <main class="page">
-      <header class="hero">
-        <p class="hero__eyebrow">Новый релиз</p>
-        <h1 class="hero__title">Снимай, редактируй и делись видео за минуты</h1>
-        <p class="hero__subtitle">
-          Минимальный лендинг для будущего продукта. Добавь свои блоки и контент без
-          лишних зависимостей.
-        </p>
-        <div class="hero__actions">
-          <button class="button button--primary" type="button" id="cta-main">
-            Попробовать демо
-          </button>
-          <button class="button button--ghost" type="button">Скачать медиа-кит</button>
-        </div>
-      </header>
+      <section class="video-frame" aria-label="Промо-видео">
+        <video
+          class="video-frame__media"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="source/video-poster.jpg"
+        >
+          <source src="source/promo-video.mp4" type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      </section>
 
-      <section class="features">
-        <article class="feature-card">
-          <h2>Лёгкий старт</h2>
-          <p>Работаем в чистом HTML, CSS и JS — идеально для быстрого прототипа.</p>
-        </article>
-        <article class="feature-card">
-          <h2>Готовая структура</h2>
-          <p>Подключены базовые стили, кнопки и сетка. Добавляй секции.</p>
-        </article>
-        <article class="feature-card">
-          <h2>Живой предпросмотр</h2>
-          <p>Запусти dev-сервер и обновляй страницу без лишних действий.</p>
-        </article>
+      <section class="cta" aria-label="Скачать приложение">
+        <p class="cta__label">Успей до окончания акции</p>
+        <p class="cta__timer" aria-live="polite" id="countdown">03:22</p>
+        <button class="cta__button" type="button" id="download-button">
+          <span>download now</span>
+        </button>
       </section>
     </main>
 
