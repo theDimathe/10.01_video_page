@@ -31,42 +31,44 @@
           <source src="source/promo-video.mp4" type="video/mp4" />
           Sorry =( </br> Here must be vieo, but your browser cant show this. </br> But you can go to next step!
         </video>
-        <button class="video-frame__play-button" type="button" id="play-overlay" aria-label="Воспроизвести видео">
+        <button class="video-frame__play-button is-hidden" type="button" id="play-overlay" aria-label="Воспроизвести видео" aria-hidden="true">
           ▶
         </button>
 
 
 <script>
-const video = document.getElementById('myVideo');
+const video = document.getElementById('hero-video');
 
-let progress = {25:false,50:false,75:false};
+if (video) {
+  let progress = {25:false,50:false,75:false};
 
-video.addEventListener('play', () => {
-  gtag('event', 'video_start', {
-    video_title: video.currentSrc,
-    video_provider: 'html5'
+  video.addEventListener('play', () => {
+    gtag('event', 'video_start', {
+      video_title: video.currentSrc,
+      video_provider: 'html5'
+    });
   });
-});
 
-video.addEventListener('timeupdate', () => {
-  const percent = Math.floor((video.currentTime / video.duration) * 100);
+  video.addEventListener('timeupdate', () => {
+    const percent = Math.floor((video.currentTime / video.duration) * 100);
 
-  [25,50,75].forEach(p => {
-    if (percent >= p && !progress[p]) {
-      progress[p] = true;
-      gtag('event', 'video_progress', {
-        video_percent: p,
-        video_title: video.currentSrc
-      });
-    }
+    [25,50,75].forEach(p => {
+      if (percent >= p && !progress[p]) {
+        progress[p] = true;
+        gtag('event', 'video_progress', {
+          video_percent: p,
+          video_title: video.currentSrc
+        });
+      }
+    });
   });
-});
 
-video.addEventListener('ended', () => {
-  gtag('event', 'video_complete', {
-    video_title: video.currentSrc
+  video.addEventListener('ended', () => {
+    gtag('event', 'video_complete', {
+      video_title: video.currentSrc
+    });
   });
-});
+}
 </script>
 
         
