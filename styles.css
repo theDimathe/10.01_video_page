@@ -75,6 +75,37 @@ body {
   z-index: 2;
 }
 
+.video-frame__play-button {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: rgba(6, 7, 11, 0.6);
+  color: #ffffff;
+  font-size: 28px;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.video-frame__play-button:hover {
+  background: rgba(6, 7, 11, 0.8);
+  transform: scale(1.04);
+}
+
+.video-frame__play-button.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 #restart-video {
   display: none;
 }

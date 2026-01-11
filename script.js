@@ -4,6 +4,7 @@ const heroVideo = document.querySelector("#hero-video");
 const muteToggle = document.querySelector("#mute-toggle");
 const restartButton = document.querySelector("#restart-video");
 const downloadButton = document.querySelector("#download-button");
+const playOverlay = document.querySelector("#play-overlay");
 
 const TOTAL_MS = (3 * 60 + 22) * 1000;
 let remainingMs = TOTAL_MS;
@@ -29,10 +30,14 @@ tick();
 setInterval(tick, 10);
 
 if (heroVideo && muteToggle) {
+  let hasStarted = false;
+
   const attemptAutoplay = () => {
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(() => {});
+      playPromise.catch(() => {
+        playOverlay?.classList.remove("is-hidden");
+      });
     }
   };
 
@@ -54,6 +59,33 @@ if (heroVideo && muteToggle) {
   muteToggle.addEventListener("click", () => {
     heroVideo.muted = !heroVideo.muted;
     updateMuteIcon();
+  });
+
+  const hidePlayOverlay = () => {
+    playOverlay?.classList.add("is-hidden");
+  };
+
+  const showPlayOverlay = () => {
+    if (!hasStarted) {
+      playOverlay?.classList.remove("is-hidden");
+    }
+  };
+
+  heroVideo.addEventListener("play", () => {
+    hasStarted = true;
+    hidePlayOverlay();
+  });
+
+  heroVideo.addEventListener("pause", showPlayOverlay);
+  heroVideo.addEventListener("ended", showPlayOverlay);
+
+  playOverlay?.addEventListener("click", () => {
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        showPlayOverlay();
+      });
+    }
   });
 
   if (downloadButton) {
