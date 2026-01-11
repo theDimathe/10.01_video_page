@@ -30,6 +30,9 @@
           <source src="source/promo-video.mp4" type="video/mp4" />
           Sorry =( </br> Here must be vieo, but your browser cant show this. </br> But you can go to next step!
         </video>
+        <button class="video-frame__play-button" type="button" id="play-overlay" aria-label="Воспроизвести видео">
+          ▶
+        </button>
 
 
 <script>
@@ -80,7 +83,7 @@ video.addEventListener('ended', () => {
         <p class="cta__timer" aria-live="polite">
           Offer ends in · <span id="countdown">03:22:00</span>
         </p>
-        <button class="cta__button" type="button" id="download-button">
+        <button class="cta__button is-disabled" type="button" id="download-button" disabled aria-disabled="true">
           <span>download now</span>
         </button>
       </section>
