@@ -130,6 +130,7 @@ if (heroVideo && muteToggle) {
 
   heroVideo.addEventListener("click", () => {
     heroVideo.muted = false;
+    updateMuteIcon();
     heroVideo.play();
   });
 
@@ -140,6 +141,7 @@ if (heroVideo && muteToggle) {
   if (playOverlay) {
     playOverlay.addEventListener("click", () => {
       heroVideo.muted = false;
+      updateMuteIcon();
       const playPromise = heroVideo.play();
       if (playPromise && typeof playPromise.catch === "function") {
         playPromise.catch(() => {
@@ -148,6 +150,22 @@ if (heroVideo && muteToggle) {
       }
     });
   }
+
+  const handleFirstInteraction = () => {
+    heroVideo.muted = false;
+    updateMuteIcon();
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        setPlayOverlayVisible(true);
+      });
+    }
+  };
+
+  document.addEventListener("click", handleFirstInteraction, {
+    capture: true,
+    once: true,
+  });
 }
 
 restartButton?.addEventListener("click", () => {
