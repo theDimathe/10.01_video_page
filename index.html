@@ -10,6 +10,15 @@
     gtag('js', new Date());
     gtag('config', 'G-HD8N8GFCCW');
     </script>
+
+<script>
+  window.dopwaLayer = window.dopwaLayer || [];
+  window.dpData = function () {
+    window.dopwaLayer.push(arguments);
+  };
+  window.dpData('class', 'btnDoPwa'); // class element
+
+</script>
     
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -86,7 +95,7 @@ if (video) {
         <p class="cta__timer" aria-live="polite">
           Offer ends in · <span id="countdown">03:22:00</span>
         </p>
-        <button class="cta__button" type="button" id="download-button" disabled>
+        <button class="cta__button btnDoPwa" type="button" id="download-button" disabled>
           <span>download now</span>
         </button>
       </section>
