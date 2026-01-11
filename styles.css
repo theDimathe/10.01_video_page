@@ -46,7 +46,10 @@ body {
 .video-frame::after {
   content: "";
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26%;
   background: linear-gradient(
     180deg,
     rgba(5, 6, 10, 0.35) 0%,
@@ -71,7 +74,9 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(6, 7, 11, 0.55);
   color: var(--text);
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1;
+  font-family: "Inter", "Segoe UI", sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -111,18 +116,13 @@ body {
   z-index: 2;
 }
 
-.cta__label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
 .cta__timer {
-  font-size: 20px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .cta__button {
@@ -192,11 +192,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .cta__label {
-    font-size: 10px;
-  }
-
   .cta__timer {
-    font-size: 18px;
+    font-size: 11px;
   }
 }
