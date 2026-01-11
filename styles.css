@@ -69,13 +69,13 @@ body {
 }
 
 .icon-button {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(6, 7, 11, 0.55);
   color: var(--text);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   font-family: "Inter", "Segoe UI", sans-serif;
   display: inline-flex;
@@ -120,7 +120,6 @@ body {
 .cta__timer {
   font-size: 16px;
   font-weight: 400;
-  text-transform: uppercase;
   color: var(--muted);
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
@@ -138,6 +137,7 @@ body {
 .cta__button {
   width: clamp(280px, 82vw, 420px);
   height: 55px;
+  margin-top: -13px;
   border-radius: 11px;
   border: 1px solid rgba(255, 255, 255, 0.45);
   background:
@@ -146,15 +146,33 @@ body {
   box-shadow:
     0 14px 30px rgba(255, 143, 31, 0.35),
     0 0 24px rgba(255, 255, 255, 0.35);
-  color: #120b08;
-  font-size: 15px;
+  color: #ffffff;
+  font-size: 17px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta__button:disabled {
+  cursor: not-allowed;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)) border-box,
+    linear-gradient(135deg, rgba(120, 120, 120, 0.45), rgba(90, 90, 90, 0.45)) padding-box;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cta__button:disabled::after {
+  display: none;
+}
+
+.cta__button:disabled:hover {
+  transform: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .cta__button::after {
@@ -177,6 +195,40 @@ body {
 .cta__button span {
   position: relative;
   z-index: 1;
+  color: #ffffff;
+}
+
+.cta__tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-50%, -10px);
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(15, 18, 26, 0.92);
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.cta__tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(15, 18, 26, 0.92) transparent transparent transparent;
+}
+
+.cta__tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -16px);
 }
 
 .cta__button:hover {
