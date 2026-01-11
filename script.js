@@ -78,7 +78,7 @@ downloadButton?.addEventListener("click", (event) => {
 
 if (heroVideo && muteToggle) {
   const attemptAutoplay = () => {
-    heroVideo.muted = false;
+    heroVideo.muted = true;
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {});
