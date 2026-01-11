@@ -4,10 +4,11 @@ const heroVideo = document.querySelector("#hero-video");
 const muteToggle = document.querySelector("#mute-toggle");
 const restartButton = document.querySelector("#restart-video");
 const downloadButton = document.querySelector("#download-button");
-const playOverlay = document.querySelector("#play-overlay");
 
 const TOTAL_MS = (3 * 60 + 22) * 1000;
 let remainingMs = TOTAL_MS;
+let tooltipTimer = null;
+let tooltip = null;
 
 const formatTime = (ms) => {
   const totalSeconds = Math.floor(ms / 1000);
@@ -24,10 +25,56 @@ const tick = () => {
 
   countdown.textContent = formatTime(remainingMs);
   remainingMs = Math.max(remainingMs - 10, 0);
+
+  if (downloadButton) {
+    downloadButton.disabled = remainingMs > 0;
+  }
 };
 
 tick();
 setInterval(tick, 10);
+
+const ensureTooltip = () => {
+  if (!downloadButton || tooltip) {
+    return;
+  }
+
+  tooltip = document.createElement("span");
+  tooltip.className = "cta__tooltip";
+  tooltip.setAttribute("role", "status");
+  downloadButton.appendChild(tooltip);
+};
+
+const showDisabledTooltip = () => {
+  if (!downloadButton || !downloadButton.disabled) {
+    return;
+  }
+
+  ensureTooltip();
+  if (!tooltip) {
+    return;
+  }
+
+  const remainingSeconds = Math.ceil(remainingMs / 1000);
+  const label = `Please wait ${remainingSeconds} seconds`;
+  tooltip.textContent = label;
+  tooltip.classList.add("is-visible");
+
+  if (tooltipTimer) {
+    clearTimeout(tooltipTimer);
+  }
+
+  tooltipTimer = setTimeout(() => {
+    tooltip?.classList.remove("is-visible");
+  }, 2000);
+};
+
+downloadButton?.addEventListener("click", (event) => {
+  if (downloadButton.disabled) {
+    event.preventDefault();
+    showDisabledTooltip();
+  }
+});
 
 if (heroVideo && muteToggle) {
   const attemptAutoplay = () => {
