@@ -1,0 +1,14 @@
+{
+  "name": "video-landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Simple HTML/CSS/JS landing page",
+  "scripts": {
+    "dev": "live-server --port=5173 --open=/",
+    "format": "prettier --write \"**/*.{html,css,js,md}\""
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "prettier": "^3.2.5"
+  }
+}

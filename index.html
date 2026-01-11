@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Видео лендинг</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="video-frame" aria-label="Промо-видео">
+        <video
+          class="video-frame__media"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="source/video-poster.jpg"
+        >
+          <source src="source/promo-video.mp4" type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      </section>
+
+      <section class="cta" aria-label="Скачать приложение">
+        <p class="cta__label">Успей до окончания акции</p>
+        <p class="cta__timer" aria-live="polite" id="countdown">03:22</p>
+        <button class="cta__button" type="button" id="download-button">
+          <span>download now</span>
+        </button>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
