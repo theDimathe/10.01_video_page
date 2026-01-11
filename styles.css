@@ -49,11 +49,12 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 26%;
+  height: 28%;
   background: linear-gradient(
     180deg,
-    rgba(5, 6, 10, 0.35) 0%,
-    rgba(5, 6, 10, 0.6) 60%,
+    rgba(5, 6, 10, 0) 0%,
+    rgba(5, 6, 10, 0.35) 35%,
+    rgba(5, 6, 10, 0.6) 70%,
     rgba(5, 6, 10, 0.9) 100%
   );
 }
@@ -117,12 +118,21 @@ body {
 }
 
 .cta__timer {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 16px;
+  font-weight: 400;
   text-transform: uppercase;
   color: var(--muted);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.cta__timer span {
+  display: inline-block;
+  min-width: 78px;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 0 6px #ffffff,
+    0 0 11px #ffffff,
+    0 0 16px #ffffff;
 }
 
 .cta__button {
@@ -193,6 +203,6 @@ body {
 
 @media (max-width: 480px) {
   .cta__timer {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
