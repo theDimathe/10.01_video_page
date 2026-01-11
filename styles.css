@@ -1,0 +1,131 @@
+:root {
+  color-scheme: light;
+  --bg: #0b0d12;
+  --card: #161a22;
+  --text: #f3f6ff;
+  --muted: #a7b0c0;
+  --accent: #6b8cff;
+  --accent-strong: #4e6bff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1a2233, var(--bg) 45%);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  width: min(960px, 92vw);
+  padding: 64px 0 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.hero__title {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+}
+
+.hero__subtitle {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.button--primary {
+  background: var(--accent);
+  color: #0b0d12;
+  box-shadow: 0 10px 24px rgba(107, 140, 255, 0.35);
+}
+
+.button--primary:hover {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.button--ghost:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.features {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.feature-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(6, 9, 14, 0.5);
+}
+
+.feature-card h2 {
+  font-size: 20px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 48px 0 72px;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
