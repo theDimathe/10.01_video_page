@@ -27,6 +27,18 @@ tick();
 setInterval(tick, 10);
 
 if (heroVideo && muteToggle) {
+  const attemptAutoplay = () => {
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {});
+    }
+  };
+
+  heroVideo.addEventListener("canplay", attemptAutoplay);
+  if (heroVideo.readyState >= 3) {
+    attemptAutoplay();
+  }
+
   const updateMuteIcon = () => {
     muteToggle.textContent = heroVideo.muted ? "🔇" : "🔊";
     muteToggle.setAttribute(

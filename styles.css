@@ -120,7 +120,6 @@ body {
 .cta__timer {
   font-size: 16px;
   font-weight: 400;
-  text-transform: uppercase;
   color: var(--muted);
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
@@ -146,7 +145,7 @@ body {
   box-shadow:
     0 14px 30px rgba(255, 143, 31, 0.35),
     0 0 24px rgba(255, 255, 255, 0.35);
-  color: #120b08;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 800;
   text-transform: uppercase;
