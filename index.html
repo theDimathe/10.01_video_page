@@ -12,14 +12,22 @@
         <video
           class="video-frame__media"
           autoplay
-          muted
           loop
           playsinline
           poster="source/video-poster.jpg"
+          id="hero-video"
         >
           <source src="source/promo-video.mp4" type="video/mp4" />
           Ваш браузер не поддерживает видео.
         </video>
+        <div class="video-frame__controls" aria-label="Управление видео">
+          <button class="icon-button" type="button" id="mute-toggle" aria-label="Выключить звук">
+            🔊
+          </button>
+          <button class="icon-button" type="button" id="restart-video" aria-label="Запустить сначала">
+            ↺
+          </button>
+        </div>
       </section>
 
       <section class="cta" aria-label="Скачать приложение">
@@ -29,7 +37,7 @@
           <span>download now</span>
         </button>
       </section>
-      <p class="version">v0.0.2</p>
+      <p class="version">v0.0.3</p>
     </main>
 
     <script src="script.js"></script>

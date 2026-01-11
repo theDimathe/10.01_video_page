@@ -55,6 +55,36 @@ body {
   );
 }
 
+.video-frame__controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(6, 7, 11, 0.55);
+  color: var(--text);
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.icon-button:hover {
+  background: rgba(6, 7, 11, 0.75);
+  transform: translateY(-1px);
+}
+
 .cta {
   position: absolute;
   left: 50%;
@@ -82,56 +112,48 @@ body {
 }
 
 .cta__label {
-  font-size: 15px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--muted);
 }
 
 .cta__timer {
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .cta__button {
   width: clamp(280px, 82vw, 420px);
   height: 55px;
   border-radius: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  background: linear-gradient(135deg, #ffcf4d, #ff8f1f 55%, #ff4d8d);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)) border-box,
+    linear-gradient(135deg, #ffd56a, #ff8f1f 55%, #ff4d8d) padding-box;
   box-shadow:
-    0 12px 30px rgba(255, 143, 31, 0.35),
-    0 0 20px rgba(255, 255, 255, 0.35),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    0 14px 30px rgba(255, 143, 31, 0.35),
+    0 0 24px rgba(255, 255, 255, 0.35);
   color: #120b08;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.cta__button::before {
-  content: "";
-  position: absolute;
-  inset: 2px;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.35);
-}
-
 .cta__button::after {
   content: "";
   position: absolute;
-  top: -40%;
-  left: -30%;
-  width: 60%;
-  height: 180%;
+  top: -60%;
+  left: -40%;
+  width: 70%;
+  height: 220%;
   background: linear-gradient(
     110deg,
     transparent,
@@ -150,9 +172,8 @@ body {
 .cta__button:hover {
   transform: translateY(-1px) scale(1.01);
   box-shadow:
-    0 16px 40px rgba(255, 143, 31, 0.4),
-    0 0 22px rgba(255, 255, 255, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    0 18px 42px rgba(255, 143, 31, 0.45),
+    0 0 28px rgba(255, 255, 255, 0.5);
 }
 
 @keyframes shine {
@@ -172,10 +193,10 @@ body {
 
 @media (max-width: 480px) {
   .cta__label {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   .cta__timer {
-    font-size: 34px;
+    font-size: 18px;
   }
 }
