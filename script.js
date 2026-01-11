@@ -11,6 +11,27 @@ let remainingMs = TOTAL_MS;
 let tooltipTimer = null;
 let tooltip = null;
 
+const updateMuteIcon = () => {
+  if (!heroVideo || !muteToggle) {
+    return;
+  }
+
+  muteToggle.textContent = heroVideo.muted ? "🔇" : "🔊";
+  muteToggle.setAttribute(
+    "aria-label",
+    heroVideo.muted ? "Включить звук" : "Выключить звук",
+  );
+};
+
+const unmuteHeroVideo = () => {
+  if (!heroVideo) {
+    return;
+  }
+
+  heroVideo.muted = false;
+  updateMuteIcon();
+};
+
 const formatTime = (ms) => {
   const totalSeconds = Math.floor(ms / 1000);
   const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
@@ -74,6 +95,7 @@ downloadButton?.addEventListener("click", (event) => {
   if (downloadButton.disabled) {
     event.preventDefault();
     showDisabledTooltip();
+    unmuteHeroVideo();
   }
 });
 
@@ -85,14 +107,6 @@ if (heroVideo && muteToggle) {
 
     playOverlay.classList.toggle("is-hidden", !visible);
     playOverlay.setAttribute("aria-hidden", String(!visible));
-  };
-
-  const updateMuteIcon = () => {
-    muteToggle.textContent = heroVideo.muted ? "🔇" : "🔊";
-    muteToggle.setAttribute(
-      "aria-label",
-      heroVideo.muted ? "Включить звук" : "Выключить звук",
-    );
   };
 
   const attemptAutoplay = () => {
@@ -130,8 +144,7 @@ if (heroVideo && muteToggle) {
   });
 
   heroVideo.addEventListener("click", () => {
-    heroVideo.muted = false;
-    updateMuteIcon();
+    unmuteHeroVideo();
     heroVideo.play();
   });
 
@@ -141,8 +154,7 @@ if (heroVideo && muteToggle) {
 
   if (playOverlay) {
     playOverlay.addEventListener("click", () => {
-      heroVideo.muted = false;
-      updateMuteIcon();
+      unmuteHeroVideo();
       const playPromise = heroVideo.play();
       if (playPromise && typeof playPromise.catch === "function") {
         playPromise.catch(() => {
@@ -153,8 +165,7 @@ if (heroVideo && muteToggle) {
   }
 
   const handleFirstInteraction = () => {
-    heroVideo.muted = false;
-    updateMuteIcon();
+    unmuteHeroVideo();
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
@@ -175,6 +186,6 @@ restartButton?.addEventListener("click", () => {
   }
 
   heroVideo.currentTime = 0;
-  heroVideo.muted = false;
+  unmuteHeroVideo();
   heroVideo.play();
 });
