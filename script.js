@@ -88,7 +88,7 @@ if (heroVideo && muteToggle) {
   };
 
   const attemptAutoplay = () => {
-    heroVideo.muted = true;
+    heroVideo.muted = false;
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise
