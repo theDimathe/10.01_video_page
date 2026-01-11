@@ -4,6 +4,7 @@ const heroVideo = document.querySelector("#hero-video");
 const muteToggle = document.querySelector("#mute-toggle");
 const restartButton = document.querySelector("#restart-video");
 const downloadButton = document.querySelector("#download-button");
+const playOverlay = document.querySelector("#play-overlay");
 
 const TOTAL_MS = (3 * 60 + 22) * 1000;
 let remainingMs = TOTAL_MS;
@@ -77,11 +78,33 @@ downloadButton?.addEventListener("click", (event) => {
 });
 
 if (heroVideo && muteToggle) {
+  const setPlayOverlayVisible = (visible) => {
+    if (!playOverlay) {
+      return;
+    }
+
+    playOverlay.classList.toggle("is-hidden", !visible);
+    playOverlay.setAttribute("aria-hidden", String(!visible));
+  };
+
   const attemptAutoplay = () => {
-    heroVideo.muted = true;
+    heroVideo.muted = false;
     const playPromise = heroVideo.play();
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(() => {});
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise
+        .then(() => {
+          setPlayOverlayVisible(false);
+        })
+        .catch(() => {
+          setPlayOverlayVisible(true);
+        });
+      return;
+    }
+
+    if (heroVideo.paused) {
+      setPlayOverlayVisible(true);
+    } else {
+      setPlayOverlayVisible(false);
     }
   };
 
@@ -109,6 +132,22 @@ if (heroVideo && muteToggle) {
     heroVideo.muted = false;
     heroVideo.play();
   });
+
+  heroVideo.addEventListener("play", () => {
+    setPlayOverlayVisible(false);
+  });
+
+  if (playOverlay) {
+    playOverlay.addEventListener("click", () => {
+      heroVideo.muted = false;
+      const playPromise = heroVideo.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {
+          setPlayOverlayVisible(true);
+        });
+      }
+    });
+  }
 }
 
 restartButton?.addEventListener("click", () => {
