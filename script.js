@@ -1,4 +1,5 @@
 const countdown = document.querySelector("#countdown");
+const timer = document.querySelector(".cta__timer");
 const heroVideo = document.querySelector("#hero-video");
 const muteToggle = document.querySelector("#mute-toggle");
 const restartButton = document.querySelector("#restart-video");
