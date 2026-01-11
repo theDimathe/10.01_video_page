@@ -87,8 +87,17 @@ if (heroVideo && muteToggle) {
     playOverlay.setAttribute("aria-hidden", String(!visible));
   };
 
+  const updateMuteIcon = () => {
+    muteToggle.textContent = heroVideo.muted ? "🔇" : "🔊";
+    muteToggle.setAttribute(
+      "aria-label",
+      heroVideo.muted ? "Включить звук" : "Выключить звук",
+    );
+  };
+
   const attemptAutoplay = () => {
-    heroVideo.muted = false;
+    heroVideo.muted = true;
+    updateMuteIcon();
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise
@@ -112,14 +121,6 @@ if (heroVideo && muteToggle) {
   if (heroVideo.readyState >= 3) {
     attemptAutoplay();
   }
-
-  const updateMuteIcon = () => {
-    muteToggle.textContent = heroVideo.muted ? "🔇" : "🔊";
-    muteToggle.setAttribute(
-      "aria-label",
-      heroVideo.muted ? "Включить звук" : "Выключить звук",
-    );
-  };
 
   updateMuteIcon();
 
