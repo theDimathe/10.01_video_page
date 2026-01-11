@@ -1,14 +1,24 @@
 <!doctype html>
 <html lang="ru">
   <head>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HD8N8GFCCW"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HD8N8GFCCW');
+    </script>
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Видео лендинг</title>
+    <title>Title</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="page">
-      <section class="video-frame" aria-label="Промо-видео">
+      <section class="video-frame" aria-label="promo-video">
         <video
           class="video-frame__media"
           autoplay
@@ -18,23 +28,62 @@
           id="hero-video"
         >
           <source src="source/promo-video.mp4" type="video/mp4" />
-          Ваш браузер не поддерживает видео.
+          Sorry =( </br> Here must be vieo, but your browser cant show this. </br> But you can go to next step!
         </video>
-        <div class="video-frame__controls" aria-label="Управление видео">
-          <button class="icon-button" type="button" id="mute-toggle" aria-label="Выключить звук">
+        <button class="video-frame__play-button" type="button" id="play-overlay" aria-label="Воспроизвести видео">
+          ▶
+        </button>
+
+
+<script>
+const video = document.getElementById('myVideo');
+
+let progress = {25:false,50:false,75:false};
+
+video.addEventListener('play', () => {
+  gtag('event', 'video_start', {
+    video_title: video.currentSrc,
+    video_provider: 'html5'
+  });
+});
+
+video.addEventListener('timeupdate', () => {
+  const percent = Math.floor((video.currentTime / video.duration) * 100);
+
+  [25,50,75].forEach(p => {
+    if (percent >= p && !progress[p]) {
+      progress[p] = true;
+      gtag('event', 'video_progress', {
+        video_percent: p,
+        video_title: video.currentSrc
+      });
+    }
+  });
+});
+
+video.addEventListener('ended', () => {
+  gtag('event', 'video_complete', {
+    video_title: video.currentSrc
+  });
+});
+</script>
+
+        
+        <div class="video-frame__controls" aria-label="Controls">
+          <button class="icon-button" type="button" id="mute-toggle" aria-label="Soun off">
             🔊
           </button>
-          <button class="icon-button" type="button" id="restart-video" aria-label="Запустить сначала">
+          <button class="icon-button" type="button" id="restart-video" aria-label="Play again">
             🔁
           </button>
         </div>
       </section>
 
-      <section class="cta" aria-label="Скачать приложение">
+      <section class="cta" aria-label="СDownload app">
         <p class="cta__timer" aria-live="polite">
           Offer ends in · <span id="countdown">03:22:00</span>
         </p>
-        <button class="cta__button" type="button" id="download-button">
+        <button class="cta__button" type="button" id="download-button" disabled>
           <span>download now</span>
         </button>
       </section>
