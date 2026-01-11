@@ -30,14 +30,11 @@ tick();
 setInterval(tick, 10);
 
 if (heroVideo && muteToggle) {
-  let hasStarted = false;
-
   const attemptAutoplay = () => {
+    heroVideo.muted = false;
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(() => {
-        playOverlay?.classList.remove("is-hidden");
-      });
+      playPromise.catch(() => {});
     }
   };
 
