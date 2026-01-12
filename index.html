@@ -105,12 +105,21 @@ window.dataLayer = window.dataLayer || [];
       }
     });
 
+    
     video.addEventListener('ended', () => {
   dataLayer.push({
     event: 'video_watch_end',
     watched_seconds: Math.floor(video.currentTime)
   });
 });
+
+    video.addEventListener('pause', () => {
+  dataLayer.push({
+    event: 'video_pause',
+    pause_second: Math.floor(video.currentTime)
+  });
+});
+
 
 
     
