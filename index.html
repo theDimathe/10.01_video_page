@@ -24,7 +24,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <title>Title</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
+
+  
   <body>
+
+    
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M7698JD7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -44,45 +48,90 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <source src="source/promo-video.mp4" type="video/mp4" />
           Sorry =( </br> Here must be vieo, but your browser cant show this. </br> But you can go to next step!
         </video>
+
+
+        <script>
+window.dataLayer = window.dataLayer || [];
+
+(function () {
+  const CHECKPOINTS = [20, 40, 60, 90];
+
+  function initVideoTracking(video) {
+    const fired = {
+      start: false,
+      checkpoints: {},
+      complete: false
+    };
+
+    CHECKPOINTS.forEach(sec => fired.checkpoints[sec] = false);
+
+    function pushEvent(name, extra = {}) {
+      dataLayer.push({
+        event: name,
+        video_src: video.currentSrc || video.src,
+        video_duration: Math.round(video.duration || 0),
+        video_current_time: Math.round(video.currentTime || 0),
+        ...extra
+      });
+    }
+
+    video.addEventListener('play', () => {
+      if (!fired.start) {
+        fired.start = true;
+        pushEvent('video_start');
+      }
+    });
+
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration || isNaN(video.duration)) return;
+
+      CHECKPOINTS.forEach(sec => {
+        if (
+          video.currentTime >= sec &&
+          !fired.checkpoints[sec]
+        ) {
+          fired.checkpoints[sec] = true;
+          pushEvent(`video_watch_${sec}s`, {
+            video_checkpoint: sec
+          });
+        }
+      });
+    });
+
+    video.addEventListener('ended', () => {
+      if (!fired.complete) {
+        fired.complete = true;
+        pushEvent('video_complete');
+      }
+    });
+  }
+
+  function scanVideos() {
+    document.querySelectorAll('video').forEach(video => {
+      if (!video.__gaTracked) {
+        video.__gaTracked = true;
+        initVideoTracking(video);
+      }
+    });
+  }
+
+  // initial scan
+  scanVideos();
+
+  // на случай SPA / lazy load
+  const observer = new MutationObserver(scanVideos);
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
+
+        
         <button class="video-frame__play-button is-hidden" type="button" id="play-overlay" aria-label="Воспроизвести видео" aria-hidden="true">
           ▶
         </button>
 
 
-<script>
-const video = document.getElementById('hero-video');
 
-if (video) {
-  let progress = {25:false,50:false,75:false};
-
-  video.addEventListener('play', () => {
-    gtag('event', 'video_start', {
-      video_title: video.currentSrc,
-      video_provider: 'html5'
-    });
-  });
-
-  video.addEventListener('timeupdate', () => {
-    const percent = Math.floor((video.currentTime / video.duration) * 100);
-
-    [25,50,75].forEach(p => {
-      if (percent >= p && !progress[p]) {
-        progress[p] = true;
-        gtag('event', 'video_progress', {
-          video_percent: p,
-          video_title: video.currentSrc
-        });
-      }
-    });
-  });
-
-  video.addEventListener('ended', () => {
-    gtag('event', 'video_complete', {
-      video_title: video.currentSrc
-    });
-  });
-}
-</script>
 
         
         <div class="video-frame__controls" aria-label="Controls">
