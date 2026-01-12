@@ -104,6 +104,16 @@ window.dataLayer = window.dataLayer || [];
         pushEvent('video_complete');
       }
     });
+
+    video.addEventListener('ended', () => {
+  dataLayer.push({
+    event: 'video_watch_end',
+    watched_seconds: Math.floor(video.currentTime)
+  });
+});
+
+
+    
   }
 
   function scanVideos() {
@@ -115,10 +125,10 @@ window.dataLayer = window.dataLayer || [];
     });
   }
 
-  // initial scan
+
   scanVideos();
 
-  // на случай SPA / lazy load
+ 
   const observer = new MutationObserver(scanVideos);
   observer.observe(document.body, { childList: true, subtree: true });
 })();
