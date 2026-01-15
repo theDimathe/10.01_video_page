@@ -5,11 +5,15 @@ const muteToggle = document.querySelector("#mute-toggle");
 const restartButton = document.querySelector("#restart-video");
 const downloadButton = document.querySelector("#download-button");
 const playOverlay = document.querySelector("#play-overlay");
+const ageModal = document.querySelector("#age-modal");
+const ageConfirmButton = document.querySelector("#age-confirm");
+const buttonLabel = downloadButton?.querySelector(".cta__button-label");
 
 const TOTAL_MS = (3 * 60 + 22) * 1000;
 let remainingMs = TOTAL_MS;
 let tooltipTimer = null;
 let tooltip = null;
+let isModalOpen = Boolean(ageModal);
 
 const updateMuteIcon = () => {
   if (!heroVideo || !muteToggle) {
@@ -40,6 +44,13 @@ const formatTime = (ms) => {
   return `${minutes}:${seconds}:${centiseconds}`;
 };
 
+const formatShortTime = (ms) => {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+};
+
 const tick = () => {
   if (!countdown) {
     return;
@@ -49,7 +60,14 @@ const tick = () => {
   remainingMs = Math.max(remainingMs - 10, 0);
 
   if (downloadButton) {
-    downloadButton.disabled = remainingMs > 0;
+    const isDisabled = remainingMs > 0;
+    downloadButton.disabled = isDisabled;
+    downloadButton.classList.toggle("is-ready", !isDisabled);
+    if (buttonLabel) {
+      buttonLabel.textContent = isDisabled
+        ? `Download in ${formatShortTime(remainingMs)}`
+        : "Download now";
+    }
   }
 };
 
@@ -109,9 +127,8 @@ if (heroVideo && muteToggle) {
     playOverlay.setAttribute("aria-hidden", String(!visible));
   };
 
-  const attemptAutoplay = () => {
-    heroVideo.muted = true;
-    updateMuteIcon();
+  const attemptPlayback = () => {
+    unmuteHeroVideo();
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise
@@ -131,10 +148,15 @@ if (heroVideo && muteToggle) {
     }
   };
 
-  heroVideo.addEventListener("canplay", attemptAutoplay);
-  if (heroVideo.readyState >= 3) {
-    attemptAutoplay();
-  }
+  const startPlayback = () => {
+    isModalOpen = false;
+    ageModal?.classList.add("is-hidden");
+    if (heroVideo.readyState >= 3) {
+      attemptPlayback();
+    } else {
+      heroVideo.addEventListener("canplay", attemptPlayback, { once: true });
+    }
+  };
 
   updateMuteIcon();
 
@@ -143,7 +165,15 @@ if (heroVideo && muteToggle) {
     updateMuteIcon();
   });
 
+  heroVideo.addEventListener("loadedmetadata", () => {
+    heroVideo.currentTime = 0;
+    heroVideo.pause();
+  });
+
   heroVideo.addEventListener("click", () => {
+    if (isModalOpen) {
+      return;
+    }
     unmuteHeroVideo();
     heroVideo.play();
   });
@@ -154,6 +184,9 @@ if (heroVideo && muteToggle) {
 
   if (playOverlay) {
     playOverlay.addEventListener("click", () => {
+      if (isModalOpen) {
+        return;
+      }
       unmuteHeroVideo();
       const playPromise = heroVideo.play();
       if (playPromise && typeof playPromise.catch === "function") {
@@ -165,6 +198,9 @@ if (heroVideo && muteToggle) {
   }
 
   const handleFirstInteraction = () => {
+    if (isModalOpen) {
+      return;
+    }
     unmuteHeroVideo();
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.catch === "function") {
@@ -178,6 +214,15 @@ if (heroVideo && muteToggle) {
     capture: true,
     once: true,
   });
+
+  if (ageModal) {
+    const closeTriggers = ageModal.querySelectorAll("[data-modal-close]");
+    closeTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", startPlayback);
+    });
+  }
+
+  ageConfirmButton?.addEventListener("click", startPlayback);
 }
 
 restartButton?.addEventListener("click", () => {

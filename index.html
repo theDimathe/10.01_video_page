@@ -38,10 +38,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <section class="video-frame" aria-label="promo-video">
         <video
           class="video-frame__media"
-          autoplay
           loop
           muted
           playsinline
+          preload="auto"
           poster="source/video-poster.jpg"
           id="hero-video"
         >
@@ -168,11 +168,30 @@ window.dataLayer = window.dataLayer || [];
           Offer ends in · <span id="countdown">03:22:00</span>
         </p>
         <button class="cta__button btnDoPwa" type="button" id="download-button" disabled>
-          <span>download now</span>
+          <span class="cta__button-label">Download in 03:22</span>
+          <span class="cta__button-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2Zm-6 0V7a2 2 0 1 1 4 0v2h-4Z"/>
+            </svg>
+          </span>
         </button>
       </section>
       <p class="version">v0.0.9</p>
     </main>
+
+    <div class="age-modal" id="age-modal" role="dialog" aria-modal="true" aria-labelledby="age-modal-title">
+      <div class="age-modal__backdrop" data-modal-close></div>
+      <div class="age-modal__content" role="document">
+        <button class="age-modal__close" type="button" aria-label="Close age confirmation" data-modal-close>
+          ×
+        </button>
+        <h2 class="age-modal__title" id="age-modal-title">Hello!</h2>
+        <p class="age-modal__text">Please confirm your age</p>
+        <button class="age-modal__confirm" type="button" id="age-confirm">
+          I’m over 18 years old
+        </button>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
