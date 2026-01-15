@@ -9,7 +9,7 @@ const ageModal = document.querySelector("#age-modal");
 const ageConfirmButton = document.querySelector("#age-confirm");
 const buttonLabel = downloadButton?.querySelector(".cta__button-label");
 
-const TOTAL_MS = 70.7 * 1000;
+const TOTAL_MS = 69.7 * 1000;
 let remainingMs = TOTAL_MS;
 let tooltipTimer = null;
 let tooltip = null;
