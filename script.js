@@ -127,9 +127,8 @@ if (heroVideo && muteToggle) {
     playOverlay.setAttribute("aria-hidden", String(!visible));
   };
 
-  const attemptAutoplay = () => {
-    heroVideo.muted = true;
-    updateMuteIcon();
+  const attemptPlayback = () => {
+    unmuteHeroVideo();
     const playPromise = heroVideo.play();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise
@@ -153,9 +152,9 @@ if (heroVideo && muteToggle) {
     isModalOpen = false;
     ageModal?.classList.add("is-hidden");
     if (heroVideo.readyState >= 3) {
-      attemptAutoplay();
+      attemptPlayback();
     } else {
-      heroVideo.addEventListener("canplay", attemptAutoplay, { once: true });
+      heroVideo.addEventListener("canplay", attemptPlayback, { once: true });
     }
   };
 
@@ -164,6 +163,11 @@ if (heroVideo && muteToggle) {
   muteToggle.addEventListener("click", () => {
     heroVideo.muted = !heroVideo.muted;
     updateMuteIcon();
+  });
+
+  heroVideo.addEventListener("loadedmetadata", () => {
+    heroVideo.currentTime = 0;
+    heroVideo.pause();
   });
 
   heroVideo.addEventListener("click", () => {
