@@ -14,6 +14,8 @@ let remainingMs = TOTAL_MS;
 let tooltipTimer = null;
 let tooltip = null;
 let isModalOpen = Boolean(ageModal);
+let countdownTimerId = null;
+let countdownStarted = false;
 
 const updateMuteIcon = () => {
   if (!heroVideo || !muteToggle) {
@@ -71,8 +73,15 @@ const tick = () => {
   }
 };
 
-tick();
-setInterval(tick, 10);
+const startCountdown = () => {
+  if (countdownStarted) {
+    return;
+  }
+
+  countdownStarted = true;
+  tick();
+  countdownTimerId = setInterval(tick, 10);
+};
 
 const ensureTooltip = () => {
   if (!downloadButton || tooltip) {
@@ -180,6 +189,7 @@ if (heroVideo && muteToggle) {
 
   heroVideo.addEventListener("play", () => {
     setPlayOverlayVisible(false);
+    startCountdown();
   });
 
   if (playOverlay) {
